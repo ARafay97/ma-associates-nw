@@ -22,3 +22,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Next.js
+.next
+out
+next-env.d.ts
+
+# Environment variables
+.env
+.env*.local
+
+# Booking data (contains customer details)
+data/*.json
+data/*.tmp
