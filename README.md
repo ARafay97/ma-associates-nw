@@ -1,16 +1,46 @@
-# React + Vite
+# MA Associates NW Ltd
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Website for MA Associates NW Ltd, built with Next.js and Tailwind CSS. It has a public booking form and a password-protected admin dashboard for managing bookings.
 
-Currently, two official plugins are available:
+## Getting started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+cp .env.example .env.local   # then fill in the values
+npm run dev
+```
 
-## React Compiler
+Open http://localhost:3000 for the site and http://localhost:3000/admin for the dashboard.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Environment variables
 
-## Expanding the Oxlint configuration
+| Name | What it's for |
+| --- | --- |
+| `ADMIN_USERNAME` | Username for `/admin` |
+| `ADMIN_PASSWORD` | Password for `/admin` |
+| `ADMIN_SESSION_SECRET` | Random string (32+ characters) that signs the login cookie |
+| `BOOKINGS_FILE` | Optional. Path to the bookings JSON file (default `data/bookings.json`) |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Generate a secret with:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+## Bookings
+
+- Customers fill in the form in the **Book** section of the home page.
+- Each booking is saved to `data/bookings.json`. The file is git-ignored because it holds customer details.
+- In `/admin` you can filter bookings, mark them new, confirmed, completed or cancelled, and delete them.
+- There's no public link to `/admin`. Go to the URL directly.
+
+### Hosting note
+
+The bookings file is saved to the server's disk, so the site needs a host with a persistent, writable disk. That means a VPS, Railway or Render with a volume, or similar, run with `npm run build && npm start`. On serverless hosts such as Netlify or Vercel, the disk is read-only or wiped between requests, so bookings would be lost. To deploy there, switch storage to a database or a key-value store.
+
+## Scripts
+
+- `npm run dev`: start the dev server
+- `npm run build`: production build
+- `npm start`: run the production build
+- `npm run lint`: lint with oxlint
